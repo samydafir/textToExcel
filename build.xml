@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<project name="TextToExcel" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant">
+
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="doc.dir" value="doc"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="libs.dir" value="libs"/>
+    <property name="project.name" value="TextToExcel"/>
+    <property name="main.class" value="TextToExcelGui"/>
+    <property name="main.package" value="textToExcel"/>
+    <property name="classpath" value="C:/Program Files/Java/jdk1.8.0_91/lib/ant-javafx.jar"/>
+
+    <path id="classpath">
+        <fileset dir="${libs.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${doc.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <javac debug="on" srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${dist.dir}"/>
+        <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+            uri="javafx:com.sun.javafx.tools.ant"
+            classpath="${classpath}"/>
+
+        <fx:jar destfile="${dist.dir}/${project.name}.jar">
+            <fx:application name="${project.name}"
+                mainClass="${main.package}.${main.class}"/>
+            <fx:resources id="resources">
+                <fx:fileset dir="dist" includes="libs/*.jar"/>
+            </fx:resources>
+            <fileset dir="${build.dir}"/>
+        </fx:jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="${dist.dir}/${project.name}.jar" fork="true"/>
+    </target>
+
+    <target name="doc">
+        <mkdir dir="${doc.dir}"/>
+        <javadoc sourcepath="${src.dir}" destdir="${doc.dir}"/>
+    </target>
+</project>
