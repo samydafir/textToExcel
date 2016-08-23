@@ -23,7 +23,7 @@ public class ExcelWriter {
 		cellCount = 9;
 		rowCount = 4;
 		currRow = eval.createRow(0);
-		currRow.createCell(0).setCellValue("Auswertung Canon Rechnung");
+		currRow.createCell(0).setCellValue("Canon Invoice");
 		currRow = eval.createRow(3);
 		currRow.createCell(0).setCellValue("Location");
 		currRow.createCell(1).setCellValue("Serial Number");
